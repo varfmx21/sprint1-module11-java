@@ -33,39 +33,88 @@ class ExceptionTests {
     @Test
     @DisplayName("ResourceNotFoundException should be an instance of OrderManagementException")
     void resourceNotFoundShouldExtendBase() {
-        // TODO: After fixing the inheritance, this test should pass.
-        //       Create a ResourceNotFoundException and verify with instanceof
-        //       that it is an OrderManagementException.
+        // TODO resuelto: verificar herencia y errorCode esperado.
+        // Arrange
+        ResourceNotFoundException ex = new ResourceNotFoundException("Order not found", "O-404");
+
+        // Act
+        OrderManagementException baseException = assertInstanceOf(OrderManagementException.class, ex);
+
+        // Assert
+        assertEquals("RESOURCE_NOT_FOUND", baseException.getErrorCode());
     }
 
     @Test
     @DisplayName("ResourceNotFoundException should have errorCode RESOURCE_NOT_FOUND")
     void resourceNotFoundShouldHaveCorrectErrorCode() {
-        // TODO: Implement - Verify the errorCode.
+        // TODO resuelto: verificar errorCode y resourceId.
+        // Arrange
+        ResourceNotFoundException ex = new ResourceNotFoundException("Product not found", "P-404");
+
+        // Act
+        String errorCode = ex.getErrorCode();
+        String resourceId = ex.getResourceId();
+
+        // Assert
+        assertEquals("RESOURCE_NOT_FOUND", errorCode);
+        assertEquals("P-404", resourceId);
     }
 
     @Test
     @DisplayName("ValidationException should be an instance of OrderManagementException")
     void validationExceptionShouldExtendBase() {
-        // TODO: Implement
+        // TODO resuelto: verificar herencia y errorCode esperado.
+        // Arrange
+        ValidationException ex = new ValidationException("Invalid field", "quantity");
+
+        // Act
+        OrderManagementException baseException = assertInstanceOf(OrderManagementException.class, ex);
+
+        // Assert
+        assertEquals("VALIDATION_ERROR", baseException.getErrorCode());
     }
 
     @Test
     @DisplayName("ValidationException should store the fieldName")
     void validationExceptionShouldStoreFieldName() {
-        // TODO: Implement - Create with the constructor that takes fieldName,
-        //       verify with getFieldName().
+        // TODO resuelto: verificar fieldName con el constructor correspondiente.
+        // Arrange
+        ValidationException ex = new ValidationException("Invalid value", "price");
+
+        // Act
+        String fieldName = ex.getFieldName();
+
+        // Assert
+        assertEquals("price", fieldName);
     }
 
     @Test
     @DisplayName("BusinessRuleException should be an instance of OrderManagementException")
     void businessRuleShouldExtendBase() {
-        // TODO: Implement
+        // TODO resuelto: verificar herencia y errorCode esperado.
+        // Arrange
+        BusinessRuleException ex = new BusinessRuleException("Cannot confirm empty order");
+
+        // Act
+        OrderManagementException baseException = assertInstanceOf(OrderManagementException.class, ex);
+
+        // Assert
+        assertEquals("BUSINESS_RULE_VIOLATION", baseException.getErrorCode());
     }
 
     @Test
     @DisplayName("BusinessRuleException should support constructor with cause")
     void businessRuleShouldSupportCause() {
-        // TODO: Implement
+        // TODO resuelto: verificar constructor (message, cause).
+        // Arrange
+        RuntimeException cause = new RuntimeException("lower level failure");
+
+        // Act
+        BusinessRuleException ex = new BusinessRuleException("Rule violated", cause);
+
+        // Assert
+        assertEquals("Rule violated", ex.getMessage());
+        assertEquals("BUSINESS_RULE_VIOLATION", ex.getErrorCode());
+        assertSame(cause, ex.getCause());
     }
 }

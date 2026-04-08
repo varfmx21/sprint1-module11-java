@@ -3,6 +3,8 @@ package com.tecmx.ordermanagement.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.tecmx.ordermanagement.exception.ResourceNotFoundException;
+import com.tecmx.ordermanagement.exception.ValidationException;
 import com.tecmx.ordermanagement.model.Product;
 import com.tecmx.ordermanagement.repository.OrderRepository;
 
@@ -21,45 +23,77 @@ public class InventoryService {
         this.orderRepository = orderRepository;
     }
 
+    private void validateNotEmpty(String value, String fieldName) {
+        if (value == null || value.trim().isEmpty()) {
+            throw new ValidationException(fieldName + " no puede ser nulo o vacío");
+        }
+    }
+
+    private Product findProductOrThrow(String productId) {
+        return orderRepository.findProductById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Product no encontrado: " + productId, productId));
+    }
+
     /**
-     * Registers a new product in the inventory.
-     *
-     * TODO: 1. Validate that id is not null or empty → ValidationException. 2.
-     * Validate that name is not null or empty → ValidationException. 3.
-     * Validate that price > 0 → ValidationException. 4. Validate that
-     * stockQuantity >= 0 → ValidationException. 5. Create the product, save it
-     * in the repository. 6. Log at INFO level: "Product registered: {id} -
-     * {name} (stock: {qty}, price: {price})". 7. Return the created product.
+     * TODO resuelto:
+     * 1. Valida id  → no nulo/vacío.
+     * 2. Valida name → no nulo/vacío.
+     * 3. Valida price > 0.
+     * 4. Valida stockQuantity >= 0.
+     * 5. Crea el Product, lo guarda y registra log INFO.
      */
     public Product registerProduct(String id, String name, double price, int stockQuantity) {
-        // TODO: Implement
-        return null;
+        validateNotEmpty(id, "id");
+        validateNotEmpty(name, "name");
+
+        if (price <= 0) {
+            throw new ValidationException("price debe ser mayor que 0");
+        }
+
+        if (stockQuantity < 0) {
+            throw new ValidationException("stockQuantity no puede ser negativo");
+        }
+
+        Product product = new Product(id, name, price, stockQuantity);
+        Product saved = orderRepository.saveProduct(product);
+
+        logger.info("Product registered: {} - {} (stock: {}, price: {})", id, name, stockQuantity, price);
+        return saved;
     }
 
     /**
-     * Updates the stock of an existing product.
-     *
-     * TODO: 1. Find the product → if not found, throw
-     * ResourceNotFoundException. 2. Validate that additionalStock > 0 →
-     * ValidationException. 3. Add additionalStock to the current stock. 4. Save
-     * the updated product. 5. Log at INFO level: "Stock updated for
-     * {productId}: +{additionalStock} → new stock: {newTotal}". 6. Return the
-     * updated product.
+     * TODO resuelto:
+     * 1. Busca el producto → ResourceNotFoundException si no existe.
+     * 2. Valida additionalStock > 0.
+     * 3. Suma el stock adicional.
+     * 4. Guarda y loguea INFO.
      */
     public Product restockProduct(String productId, int additionalStock) {
-        // TODO: Implement
-        return null;
+        Product product = findProductOrThrow(productId);
+
+        if (additionalStock <= 0) {
+            throw new ValidationException("additionalStock debe ser mayor que 0");
+        }
+
+        int newTotal = product.getStockQuantity() + additionalStock;
+        product.setStockQuantity(newTotal);
+
+        Product saved = orderRepository.saveProduct(product);
+
+        logger.info("Stock updated for {}: +{} → new stock: {}", productId, additionalStock, newTotal);
+        return saved;
     }
 
     /**
-     * Checks the current stock of a product.
-     *
-     * TODO: 1. Find the product → if not found, throw
-     * ResourceNotFoundException. 2. Log at DEBUG level: "Stock check for
-     * {productId}: {currentStock}". 3. Return the stock quantity.
+     * TODO resuelto:
+     * 1. Busca el producto → ResourceNotFoundException si no existe.
+     * 2. Log DEBUG y retorna el stock actual.
      */
     public int checkStock(String productId) {
-        // TODO: Implement
-        return 0;
+        Product product = findProductOrThrow(productId);
+
+        logger.debug("Stock check for {}: {}", productId, product.getStockQuantity());
+        return product.getStockQuantity();
     }
 }

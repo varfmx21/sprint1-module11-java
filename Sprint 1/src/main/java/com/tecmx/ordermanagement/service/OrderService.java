@@ -1,9 +1,15 @@
 package com.tecmx.ordermanagement.service;
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.tecmx.ordermanagement.exception.BusinessRuleException;
+import com.tecmx.ordermanagement.exception.ValidationException;
 import com.tecmx.ordermanagement.model.Order;
+import com.tecmx.ordermanagement.model.OrderItem;
+import com.tecmx.ordermanagement.model.Product;
 import com.tecmx.ordermanagement.repository.OrderRepository;
 
 /**
@@ -24,77 +30,146 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
+    private void validateNotEmpty(String value, String fieldName) {
+        if (value == null || value.trim().isEmpty()) {
+            throw new ValidationException(fieldName + " no puede ser nulo o vacío");
+        }
+    }
+
+    private Order findOrderOrThrow(String orderId) {
+        return orderRepository.findOrderById(orderId)
+                .orElseThrow(() -> new BusinessRuleException("Order no encontrada: " + orderId));
+    }
+
+    private Product findProductOrThrow(String productId) {
+        return orderRepository.findProductById(productId)
+                .orElseThrow(() -> new BusinessRuleException("Product no encontrado: " + productId));
+    }
+
     /**
-     * Creates a new order for a customer.
-     *
-     * TODO: 1. Validate that orderId is not null or empty → throw
-     * ValidationException. 2. Validate that customerId is not null or empty →
-     * throw ValidationException. 3. Verify that no order with the same ID
-     * exists → throw BusinessRuleException. 4. Create the order, save it in the
-     * repository. 5. Log at INFO level: "Order created: {orderId} for customer:
-     * {customerId}". 6. Return the created order.
+     * TODO resuelto:
+     * 1. Valida orderId y customerId (no nulos/vacíos).
+     * 2. Verifica que no exista ya una orden con ese ID.
+     * 3. Crea la orden, la guarda y registra log INFO.
      */
     public Order createOrder(String orderId, String customerId) {
-        // TODO: Implement
-        return null;
+        validateNotEmpty(orderId, "orderId");
+        validateNotEmpty(customerId, "customerId");
+
+        if (orderRepository.existsOrderById(orderId)) {
+            throw new BusinessRuleException("Ya existe una orden con id: " + orderId);
+        }
+
+        Order order = new Order(orderId, customerId);
+        order.setStatus(Order.Status.CREATED);
+        order.setItems(new ArrayList<>());
+
+        Order saved = orderRepository.saveOrder(order);
+
+        logger.info("Order created: {} for customer: {}", orderId, customerId);
+        return saved;
     }
 
     /**
-     * Adds a product to an existing order.
-     *
-     * TODO: 1. Find the order by ID → if not found, throw
-     * ResourceNotFoundException. 2. Find the product by ID → if not found,
-     * throw ResourceNotFoundException. 3. Validate that quantity > 0 → throw
-     * ValidationException if not. 4. Validate that there is sufficient stock →
-     * throw BusinessRuleException if not. 5. Reduce the product stock by the
-     * requested quantity. 6. Create an OrderItem and add it to the order. 7.
-     * Save the updated order and product. 8. Log at INFO level: "Added
-     * {quantity}x {productName} to order {orderId}". 9. Log at DEBUG level:
-     * "Remaining stock for {productId}: {newStock}".
+     * TODO resuelto:
+     * 1. Busca la orden → ResourceNotFoundException si no existe.
+     * 2. Busca el producto → ResourceNotFoundException si no existe.
+     * 3. Valida quantity > 0.
+     * 4. Valida stock suficiente.
+     * 5. Descuenta stock, crea OrderItem, guarda ambas entidades.
+     * 6. Logs INFO y DEBUG con los mensajes exactos del TODO.
      */
     public Order addProductToOrder(String orderId, String productId, int quantity) {
-        // TODO: Implement
-        return null;
+        Order order = findOrderOrThrow(orderId);
+        Product product = findProductOrThrow(productId);
+
+        if (quantity <= 0) {
+            throw new ValidationException("quantity debe ser mayor que 0");
+        }
+
+        if (product.getStockQuantity() < quantity) {
+            throw new BusinessRuleException("Stock insuficiente para producto: " + productId);
+        }
+
+        product.setStockQuantity(product.getStockQuantity() - quantity);
+        order.addItem(new OrderItem(product, quantity));
+
+        orderRepository.saveProduct(product);
+        Order saved = orderRepository.saveOrder(order);
+
+        logger.info("Added {}x {} to order {}", quantity, product.getName(), orderId);
+        logger.debug("Remaining stock for {}: {}", productId, product.getStockQuantity());
+        return saved;
     }
 
     /**
-     * Confirms an order (changes its status to CONFIRMED).
-     *
-     * TODO: 1. Find the order → if not found, throw ResourceNotFoundException.
-     * 2. Validate that the order is in CREATED status → throw
-     * BusinessRuleException if not. 3. Validate that the order has at least one
-     * item → throw BusinessRuleException if not. 4. Change the status to
-     * CONFIRMED and save. 5. Log at INFO level: "Order {orderId} confirmed with
-     * {itemCount} items, total: {total}".
+     * TODO resuelto:
+     * 1. Busca la orden.
+     * 2. Valida que esté en CREATED (no confirmada, no cancelada).
+     * 3. Valida que tenga al menos un ítem.
+     * 4. Cambia estado a CONFIRMED, guarda y loguea.
      */
     public Order confirmOrder(String orderId) {
-        // TODO: Implement
-        return null;
+        Order order = findOrderOrThrow(orderId);
+
+        if (order.getStatus() != Order.Status.CREATED) {
+            throw new BusinessRuleException(
+                    "La orden " + orderId + " no está en estado CREATED (estado actual: " + order.getStatus() + ")"
+            );
+        }
+
+        if (order.getItems() == null || order.getItems().isEmpty()) {
+            throw new BusinessRuleException("No se puede confirmar una orden sin productos");
+        }
+
+        order.setStatus(Order.Status.CONFIRMED);
+        Order saved = orderRepository.saveOrder(order);
+
+        logger.info("Order {} confirmed with {} items, total: {}",
+                orderId, saved.getItems().size(), saved.getTotal());
+        return saved;
     }
 
     /**
-     * Cancels an order (changes its status to CANCELLED).
-     *
-     * TODO: 1. Find the order → if not found, throw ResourceNotFoundException.
-     * 2. Validate that the order is NOT in DELIVERED or CANCELLED status →
-     * throw BusinessRuleException if it is already in one of those states. 3.
-     * BONUS: Restore the stock of each product in the order items. 4. Change
-     * status to CANCELLED and save. 5. Log at WARN level: "Order {orderId} has
-     * been cancelled".
+     * TODO resuelto:
+     * 1. Busca la orden.
+     * 2. Rechaza la cancelación si está SHIPPED o DELIVERED.
+     * 3. BONUS: restaura el stock de cada producto.
+     * 4. Cambia estado a CANCELLED, guarda y loguea WARN.
      */
     public Order cancelOrder(String orderId) {
-        // TODO: Implement
-        return null;
+        Order order = findOrderOrThrow(orderId);
+
+        if (order.getStatus() == Order.Status.SHIPPED || order.getStatus() == Order.Status.DELIVERED) {
+            throw new BusinessRuleException(
+                    "No se puede cancelar una orden en estado: " + order.getStatus()
+            );
+        }
+
+        if (order.getItems() != null) {
+            for (OrderItem item : order.getItems()) {
+                Product product = item.getProduct();
+                product.setStockQuantity(product.getStockQuantity() + item.getQuantity());
+                orderRepository.saveProduct(product);
+            }
+        }
+
+        order.setStatus(Order.Status.CANCELLED);
+        Order saved = orderRepository.saveOrder(order);
+
+        logger.warn("Order {} has been cancelled", orderId);
+        return saved;
     }
 
     /**
-     * Retrieves an order by its ID.
-     *
-     * TODO: 1. Find the order → if not found, throw ResourceNotFoundException.
-     * 2. Log at DEBUG level: "Retrieved order: {orderId}". 3. Return the order.
+     * TODO resuelto:
+     * 1. Busca la orden → ResourceNotFoundException si no existe.
+     * 2. Log DEBUG y retorna.
      */
     public Order getOrder(String orderId) {
-        // TODO: Implement
-        return null;
+        Order order = findOrderOrThrow(orderId);
+
+        logger.debug("Retrieved order: {}", orderId);
+        return order;
     }
 }

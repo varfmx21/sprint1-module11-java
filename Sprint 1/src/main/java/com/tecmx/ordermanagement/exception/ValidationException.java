@@ -1,19 +1,20 @@
 package com.tecmx.ordermanagement.exception;
 
-/**
- * Thrown when there is a validation error in the input data.
- *
- * TODO: Make this class extend OrderManagementException. Use the errorCode
- * "VALIDATION_ERROR".
- */
-public class ValidationException extends RuntimeException {
 
-    // TODO: Add a 'fieldName' field to indicate which field failed validation.
+public class ValidationException extends OrderManagementException {
+
+    private final String fieldName;
+
     public ValidationException(String message) {
-        super(message);
-        // TODO: Call the OrderManagementException constructor with the correct errorCode.
+        this(message, null);
     }
 
-    // TODO: Add a constructor that takes (String message, String fieldName).
-    // TODO: Add a getter for fieldName.
+    public ValidationException(String message, String fieldName) {
+        super(message, "VALIDATION_ERROR");
+        this.fieldName = fieldName;
+    }
+
+    public String getFieldName() {
+        return fieldName;
+    }
 }

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Order Management System - Sprint 1</a> &gt; <a href="index.source.html" class="el_package">com.tecmx.ordermanagement.service</a> &gt; <span class="el_source">OrderService.java</span></div><h1>OrderService.java</h1><pre class="source lang-java linenums">package com.tecmx.ordermanagement.service;
+
+import java.util.ArrayList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.tecmx.ordermanagement.exception.BusinessRuleException;
+import com.tecmx.ordermanagement.exception.ValidationException;
+import com.tecmx.ordermanagement.model.Order;
+import com.tecmx.ordermanagement.model.OrderItem;
+import com.tecmx.ordermanagement.model.Product;
+import com.tecmx.ordermanagement.repository.OrderRepository;
+
+/**
+ * Main order management service.
+ *
+ * Students must complete the implementation following the instructions in each
+ * TODO. Each method must: 1. Validate inputs and throw the appropriate
+ * exception. 2. Log important operations at the correct level. 3. Be testable
+ * with Mockito.
+ */
+public class OrderService {
+
+<span class="fc" id="L25">    private static final Logger logger = LoggerFactory.getLogger(OrderService.class);</span>
+
+    private final OrderRepository orderRepository;
+
+<span class="fc" id="L29">    public OrderService(OrderRepository orderRepository) {</span>
+<span class="fc" id="L30">        this.orderRepository = orderRepository;</span>
+<span class="fc" id="L31">    }</span>
+
+    private void validateNotEmpty(String value, String fieldName) {
+<span class="fc bfc" id="L34" title="All 4 branches covered.">        if (value == null || value.trim().isEmpty()) {</span>
+<span class="fc" id="L35">            throw new ValidationException(fieldName + &quot; no puede ser nulo o vacío&quot;);</span>
+        }
+<span class="fc" id="L37">    }</span>
+
+    private Order findOrderOrThrow(String orderId) {
+<span class="fc" id="L40">        return orderRepository.findOrderById(orderId)</span>
+<span class="fc" id="L41">                .orElseThrow(() -&gt; new BusinessRuleException(&quot;Order no encontrada: &quot; + orderId));</span>
+    }
+
+    private Product findProductOrThrow(String productId) {
+<span class="fc" id="L45">        return orderRepository.findProductById(productId)</span>
+<span class="fc" id="L46">                .orElseThrow(() -&gt; new BusinessRuleException(&quot;Product no encontrado: &quot; + productId));</span>
+    }
+
+    /**
+     * TODO resuelto:
+     * 1. Valida orderId y customerId (no nulos/vacíos).
+     * 2. Verifica que no exista ya una orden con ese ID.
+     * 3. Crea la orden, la guarda y registra log INFO.
+     */
+    public Order createOrder(String orderId, String customerId) {
+<span class="fc" id="L56">        validateNotEmpty(orderId, &quot;orderId&quot;);</span>
+<span class="fc" id="L57">        validateNotEmpty(customerId, &quot;customerId&quot;);</span>
+
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (orderRepository.existsOrderById(orderId)) {</span>
+<span class="fc" id="L60">            throw new BusinessRuleException(&quot;Ya existe una orden con id: &quot; + orderId);</span>
+        }
+
+<span class="fc" id="L63">        Order order = new Order(orderId, customerId);</span>
+<span class="fc" id="L64">        order.setStatus(Order.Status.CREATED);</span>
+<span class="fc" id="L65">        order.setItems(new ArrayList&lt;&gt;());</span>
+
+<span class="fc" id="L67">        Order saved = orderRepository.saveOrder(order);</span>
+
+<span class="fc" id="L69">        logger.info(&quot;Order created: {} for customer: {}&quot;, orderId, customerId);</span>
+<span class="fc" id="L70">        return saved;</span>
+    }
+
+    /**
+     * TODO resuelto:
+     * 1. Busca la orden → ResourceNotFoundException si no existe.
+     * 2. Busca el producto → ResourceNotFoundException si no existe.
+     * 3. Valida quantity &gt; 0.
+     * 4. Valida stock suficiente.
+     * 5. Descuenta stock, crea OrderItem, guarda ambas entidades.
+     * 6. Logs INFO y DEBUG con los mensajes exactos del TODO.
+     */
+    public Order addProductToOrder(String orderId, String productId, int quantity) {
+<span class="fc" id="L83">        Order order = findOrderOrThrow(orderId);</span>
+<span class="fc" id="L84">        Product product = findProductOrThrow(productId);</span>
+
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (quantity &lt;= 0) {</span>
+<span class="fc" id="L87">            throw new ValidationException(&quot;quantity debe ser mayor que 0&quot;);</span>
+        }
+
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (product.getStockQuantity() &lt; quantity) {</span>
+<span class="fc" id="L91">            throw new BusinessRuleException(&quot;Stock insuficiente para producto: &quot; + productId);</span>
+        }
+
+<span class="fc" id="L94">        product.setStockQuantity(product.getStockQuantity() - quantity);</span>
+<span class="fc" id="L95">        order.addItem(new OrderItem(product, quantity));</span>
+
+<span class="fc" id="L97">        orderRepository.saveProduct(product);</span>
+<span class="fc" id="L98">        Order saved = orderRepository.saveOrder(order);</span>
+
+<span class="fc" id="L100">        logger.info(&quot;Added {}x {} to order {}&quot;, quantity, product.getName(), orderId);</span>
+<span class="fc" id="L101">        logger.debug(&quot;Remaining stock for {}: {}&quot;, productId, product.getStockQuantity());</span>
+<span class="fc" id="L102">        return saved;</span>
+    }
+
+    /**
+     * TODO resuelto:
+     * 1. Busca la orden.
+     * 2. Valida que esté en CREATED (no confirmada, no cancelada).
+     * 3. Valida que tenga al menos un ítem.
+     * 4. Cambia estado a CONFIRMED, guarda y loguea.
+     */
+    public Order confirmOrder(String orderId) {
+<span class="fc" id="L113">        Order order = findOrderOrThrow(orderId);</span>
+
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        if (order.getStatus() != Order.Status.CREATED) {</span>
+<span class="fc" id="L116">            throw new BusinessRuleException(</span>
+<span class="fc" id="L117">                    &quot;La orden &quot; + orderId + &quot; no está en estado CREATED (estado actual: &quot; + order.getStatus() + &quot;)&quot;</span>
+            );
+        }
+
+<span class="pc bpc" id="L121" title="1 of 4 branches missed.">        if (order.getItems() == null || order.getItems().isEmpty()) {</span>
+<span class="fc" id="L122">            throw new BusinessRuleException(&quot;No se puede confirmar una orden sin productos&quot;);</span>
+        }
+
+<span class="fc" id="L125">        order.setStatus(Order.Status.CONFIRMED);</span>
+<span class="fc" id="L126">        Order saved = orderRepository.saveOrder(order);</span>
+
+<span class="fc" id="L128">        logger.info(&quot;Order {} confirmed with {} items, total: {}&quot;,</span>
+<span class="fc" id="L129">                orderId, saved.getItems().size(), saved.getTotal());</span>
+<span class="fc" id="L130">        return saved;</span>
+    }
+
+    /**
+     * TODO resuelto:
+     * 1. Busca la orden.
+     * 2. Rechaza la cancelación si está SHIPPED o DELIVERED.
+     * 3. BONUS: restaura el stock de cada producto.
+     * 4. Cambia estado a CANCELLED, guarda y loguea WARN.
+     */
+    public Order cancelOrder(String orderId) {
+<span class="fc" id="L141">        Order order = findOrderOrThrow(orderId);</span>
+
+<span class="pc bpc" id="L143" title="1 of 4 branches missed.">        if (order.getStatus() == Order.Status.SHIPPED || order.getStatus() == Order.Status.DELIVERED) {</span>
+<span class="fc" id="L144">            throw new BusinessRuleException(</span>
+<span class="fc" id="L145">                    &quot;No se puede cancelar una orden en estado: &quot; + order.getStatus()</span>
+            );
+        }
+
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">        if (order.getItems() != null) {</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">            for (OrderItem item : order.getItems()) {</span>
+<span class="nc" id="L151">                Product product = item.getProduct();</span>
+<span class="nc" id="L152">                product.setStockQuantity(product.getStockQuantity() + item.getQuantity());</span>
+<span class="nc" id="L153">                orderRepository.saveProduct(product);</span>
+            }
+        }
+
+<span class="fc" id="L157">        order.setStatus(Order.Status.CANCELLED);</span>
+<span class="fc" id="L158">        Order saved = orderRepository.saveOrder(order);</span>
+
+<span class="fc" id="L160">        logger.warn(&quot;Order {} has been cancelled&quot;, orderId);</span>
+<span class="fc" id="L161">        return saved;</span>
+    }
+
+    /**
+     * TODO resuelto:
+     * 1. Busca la orden → ResourceNotFoundException si no existe.
+     * 2. Log DEBUG y retorna.
+     */
+    public Order getOrder(String orderId) {
+<span class="fc" id="L170">        Order order = findOrderOrThrow(orderId);</span>
+
+<span class="fc" id="L172">        logger.debug(&quot;Retrieved order: {}&quot;, orderId);</span>
+<span class="fc" id="L173">        return order;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -4,10 +4,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.tecmx.ordermanagement.exception.BusinessRuleException;
+
 /**
  * Represents a purchase order.
  */
 public class Order {
+
+    private static final Logger logger = LoggerFactory.getLogger(Order.class);
 
     public enum Status {
         CREATED, CONFIRMED, SHIPPED, DELIVERED, CANCELLED
@@ -75,14 +82,17 @@ public class Order {
         this.items.add(item);
     }
 
-    /**
-     * TODO: Implement this method to calculate the order total. - Sum the
-     * subtotals of all OrderItems. - Throw BusinessRuleException if the order
-     * has no items. - Log the calculated total at INFO level.
-     */
     public double getTotal() {
-        // TODO: Implement
-        return 0.0;
+        if (items == null || items.isEmpty()) {
+            throw new BusinessRuleException("Order has no items");
+        }
+
+        double total = items.stream()
+                .mapToDouble(OrderItem::getSubtotal)
+                .sum();
+
+        logger.info("Total calculated for order {}: {}", id, total);
+        return total;
     }
 
     @Override

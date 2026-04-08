@@ -1,9 +1,16 @@
 package com.tecmx.ordermanagement.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.tecmx.ordermanagement.exception.ValidationException;
+
 /**
  * Represents a line item within an order.
  */
 public class OrderItem {
+
+    private static final Logger logger = LoggerFactory.getLogger(OrderItem.class);
 
     private Product product;
     private int quantity;
@@ -32,14 +39,14 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    /**
-     * TODO: Implement this method to calculate the subtotal (price * quantity).
-     * Should throw ValidationException if quantity <= 0. Should log the
-     * calculation at DEBUG level.
-     */
     public double getSubtotal() {
-        // TODO: Implement
-        return 0.0;
+        if (quantity <= 0) {
+            throw new ValidationException("Quantity must be greater than zero", "quantity");
+        }
+
+        double subtotal = product.getPrice() * quantity;
+        logger.debug("Subtotal calculated for product {}: {}", product.getId(), subtotal);
+        return subtotal;
     }
 
     @Override

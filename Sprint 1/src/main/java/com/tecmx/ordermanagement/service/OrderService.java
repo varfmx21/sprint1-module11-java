@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.tecmx.ordermanagement.exception.BusinessRuleException;
+import com.tecmx.ordermanagement.exception.ResourceNotFoundException;
 import com.tecmx.ordermanagement.exception.ValidationException;
 import com.tecmx.ordermanagement.model.Order;
 import com.tecmx.ordermanagement.model.OrderItem;
@@ -38,12 +39,14 @@ public class OrderService {
 
     private Order findOrderOrThrow(String orderId) {
         return orderRepository.findOrderById(orderId)
-                .orElseThrow(() -> new BusinessRuleException("Order no encontrada: " + orderId));
+            .orElseThrow(() -> new ResourceNotFoundException(
+                "Order no encontrada: " + orderId, orderId));
     }
 
     private Product findProductOrThrow(String productId) {
         return orderRepository.findProductById(productId)
-                .orElseThrow(() -> new BusinessRuleException("Product no encontrado: " + productId));
+            .orElseThrow(() -> new ResourceNotFoundException(
+                "Product no encontrado: " + productId, productId));
     }
 
     /**
@@ -139,6 +142,10 @@ public class OrderService {
      */
     public Order cancelOrder(String orderId) {
         Order order = findOrderOrThrow(orderId);
+
+        if (order.getStatus() == Order.Status.CANCELLED) {
+            throw new BusinessRuleException("La orden " + orderId + " ya está cancelada");
+        }
 
         if (order.getStatus() == Order.Status.SHIPPED || order.getStatus() == Order.Status.DELIVERED) {
             throw new BusinessRuleException(

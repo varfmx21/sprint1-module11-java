@@ -1,89 +1,99 @@
-2026-04-07 23:16:48.044 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-3: 100.0
-2026-04-07 23:16:48.048 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-4: 90.0
-2026-04-07 23:16:48.048 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order O-1: 190.0
-2026-04-07 23:16:48.083 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-1: 300.0
-2026-04-07 23:18:48.016 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-3: 100.0
-2026-04-07 23:18:48.022 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-4: 90.0
-2026-04-07 23:18:48.023 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order O-1: 190.0
-2026-04-07 23:18:48.037 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-1: 300.0
-2026-04-07 23:21:50.528 [main] INFO  c.t.o.service.OrderService - Added 3x Laptop to order ORD-001
-2026-04-07 23:21:50.534 [main] DEBUG c.t.o.service.OrderService - Remaining stock for PROD-001: 7
-2026-04-07 23:21:50.582 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:21:50.598 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:21:50.629 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:21:50.690 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product PROD-001: 999.99
-2026-04-07 23:21:50.691 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order ORD-001: 999.99
-2026-04-07 23:21:50.691 [main] INFO  c.t.o.service.OrderService - Order ORD-001 confirmed with 1 items, total: 999.99
-2026-04-07 23:21:50.720 [main] INFO  c.t.o.service.OrderService - Order created: ORD-001 for customer: CUST-001
-2026-04-07 23:21:50.774 [main] DEBUG c.t.o.service.OrderService - Retrieved order: ORD-001
-2026-04-07 23:24:56.191 [main] DEBUG c.t.o.service.InventoryService - Stock check for PROD-001: 10
-2026-04-07 23:24:56.305 [main] INFO  c.t.o.service.InventoryService - Product registered: PROD-002 - Mouse (stock: 100, price: 29.99)
-2026-04-07 23:24:56.341 [main] INFO  c.t.o.service.InventoryService - Stock updated for PROD-001: +5 → new stock: 15
-2026-04-07 23:26:37.529 [main] DEBUG c.t.o.service.InventoryService - Stock check for PROD-001: 10
-2026-04-07 23:26:37.621 [main] INFO  c.t.o.service.InventoryService - Product registered: PROD-002 - Mouse (stock: 100, price: 29.99)
-2026-04-07 23:26:37.674 [main] INFO  c.t.o.service.InventoryService - Stock updated for PROD-001: +5 → new stock: 15
-2026-04-07 23:26:37.764 [main] INFO  c.t.o.service.OrderService - Added 3x Laptop to order ORD-001
-2026-04-07 23:26:37.764 [main] DEBUG c.t.o.service.OrderService - Remaining stock for PROD-001: 7
-2026-04-07 23:26:37.780 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:26:37.790 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:26:37.801 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:26:37.844 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product PROD-001: 999.99
-2026-04-07 23:26:37.845 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order ORD-001: 999.99
-2026-04-07 23:26:37.845 [main] INFO  c.t.o.service.OrderService - Order ORD-001 confirmed with 1 items, total: 999.99
-2026-04-07 23:26:37.868 [main] INFO  c.t.o.service.OrderService - Order created: ORD-001 for customer: CUST-001
-2026-04-07 23:26:37.902 [main] DEBUG c.t.o.service.OrderService - Retrieved order: ORD-001
-2026-04-07 23:26:37.925 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-3: 100.0
-2026-04-07 23:26:37.925 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-4: 90.0
-2026-04-07 23:26:37.925 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order O-1: 190.0
-2026-04-07 23:26:37.933 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-1: 300.0
-2026-04-07 23:26:48.735 [main] DEBUG c.t.o.service.InventoryService - Stock check for PROD-001: 10
-2026-04-07 23:26:48.801 [main] INFO  c.t.o.service.InventoryService - Product registered: PROD-002 - Mouse (stock: 100, price: 29.99)
-2026-04-07 23:26:48.832 [main] INFO  c.t.o.service.InventoryService - Stock updated for PROD-001: +5 → new stock: 15
-2026-04-07 23:26:48.925 [main] INFO  c.t.o.service.OrderService - Added 3x Laptop to order ORD-001
-2026-04-07 23:26:48.925 [main] DEBUG c.t.o.service.OrderService - Remaining stock for PROD-001: 7
-2026-04-07 23:26:48.943 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:26:48.956 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:26:48.965 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:26:48.985 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product PROD-001: 999.99
-2026-04-07 23:26:48.986 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order ORD-001: 999.99
-2026-04-07 23:26:48.986 [main] INFO  c.t.o.service.OrderService - Order ORD-001 confirmed with 1 items, total: 999.99
-2026-04-07 23:26:49.008 [main] INFO  c.t.o.service.OrderService - Order created: ORD-001 for customer: CUST-001
-2026-04-07 23:26:49.024 [main] DEBUG c.t.o.service.OrderService - Retrieved order: ORD-001
-2026-04-07 23:26:49.030 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-3: 100.0
-2026-04-07 23:26:49.031 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-4: 90.0
-2026-04-07 23:26:49.031 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order O-1: 190.0
-2026-04-07 23:26:49.037 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-1: 300.0
-2026-04-07 23:28:52.594 [main] DEBUG c.t.o.service.InventoryService - Stock check for PROD-001: 10
-2026-04-07 23:28:52.685 [main] INFO  c.t.o.service.InventoryService - Product registered: PROD-002 - Mouse (stock: 100, price: 29.99)
-2026-04-07 23:28:52.755 [main] INFO  c.t.o.service.InventoryService - Stock updated for PROD-001: +5 → new stock: 15
-2026-04-07 23:28:52.850 [main] INFO  c.t.o.service.OrderService - Added 3x Laptop to order ORD-001
-2026-04-07 23:28:52.851 [main] DEBUG c.t.o.service.OrderService - Remaining stock for PROD-001: 7
-2026-04-07 23:28:52.869 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:28:52.884 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:28:52.898 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:28:52.955 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product PROD-001: 999.99
-2026-04-07 23:28:52.956 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order ORD-001: 999.99
-2026-04-07 23:28:52.956 [main] INFO  c.t.o.service.OrderService - Order ORD-001 confirmed with 1 items, total: 999.99
-2026-04-07 23:28:52.999 [main] INFO  c.t.o.service.OrderService - Order created: ORD-001 for customer: CUST-001
-2026-04-07 23:28:53.034 [main] DEBUG c.t.o.service.OrderService - Retrieved order: ORD-001
-2026-04-07 23:28:53.055 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-3: 100.0
-2026-04-07 23:28:53.055 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-4: 90.0
-2026-04-07 23:28:53.056 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order O-1: 190.0
-2026-04-07 23:28:53.106 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-1: 300.0
-2026-04-07 23:29:02.879 [main] DEBUG c.t.o.service.InventoryService - Stock check for PROD-001: 10
-2026-04-07 23:29:02.968 [main] INFO  c.t.o.service.InventoryService - Product registered: PROD-002 - Mouse (stock: 100, price: 29.99)
-2026-04-07 23:29:03.011 [main] INFO  c.t.o.service.InventoryService - Stock updated for PROD-001: +5 → new stock: 15
-2026-04-07 23:29:03.074 [main] INFO  c.t.o.service.OrderService - Added 3x Laptop to order ORD-001
-2026-04-07 23:29:03.075 [main] DEBUG c.t.o.service.OrderService - Remaining stock for PROD-001: 7
-2026-04-07 23:29:03.088 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:29:03.100 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:29:03.110 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
-2026-04-07 23:29:03.129 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product PROD-001: 999.99
-2026-04-07 23:29:03.129 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order ORD-001: 999.99
-2026-04-07 23:29:03.129 [main] INFO  c.t.o.service.OrderService - Order ORD-001 confirmed with 1 items, total: 999.99
-2026-04-07 23:29:03.149 [main] INFO  c.t.o.service.OrderService - Order created: ORD-001 for customer: CUST-001
-2026-04-07 23:29:03.167 [main] DEBUG c.t.o.service.OrderService - Retrieved order: ORD-001
-2026-04-07 23:29:03.173 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-3: 100.0
-2026-04-07 23:29:03.173 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-4: 90.0
-2026-04-07 23:29:03.173 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order O-1: 190.0
-2026-04-07 23:29:03.197 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-1: 300.0
+2026-04-08 16:13:06.423 [main] DEBUG c.t.o.service.InventoryService - Stock check for PROD-001: 10
+2026-04-08 16:13:06.510 [main] INFO  c.t.o.service.InventoryService - Product registered: PROD-002 - Mouse (stock: 100, price: 29.99)
+2026-04-08 16:13:06.551 [main] INFO  c.t.o.service.InventoryService - Stock updated for PROD-001: +5 → new stock: 15
+2026-04-08 16:13:06.610 [main] INFO  c.t.o.service.OrderService - Added 3x Laptop to order ORD-001
+2026-04-08 16:13:06.610 [main] DEBUG c.t.o.service.OrderService - Remaining stock for PROD-001: 7
+2026-04-08 16:13:06.626 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 16:13:06.638 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 16:13:06.649 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 16:13:06.672 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product PROD-001: 999.99
+2026-04-08 16:13:06.673 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order ORD-001: 999.99
+2026-04-08 16:13:06.673 [main] INFO  c.t.o.service.OrderService - Order ORD-001 confirmed with 1 items, total: 999.99
+2026-04-08 16:13:06.695 [main] INFO  c.t.o.service.OrderService - Order created: ORD-001 for customer: CUST-001
+2026-04-08 16:13:06.715 [main] DEBUG c.t.o.service.OrderService - Retrieved order: ORD-001
+2026-04-08 16:13:06.721 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-3: 100.0
+2026-04-08 16:13:06.722 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-4: 90.0
+2026-04-08 16:13:06.722 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order O-1: 190.0
+2026-04-08 16:13:06.732 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-1: 300.0
+2026-04-08 19:42:03.471 [main] DEBUG c.t.o.service.InventoryService - Stock check for PROD-001: 10
+2026-04-08 19:42:03.565 [main] INFO  c.t.o.service.InventoryService - Product registered: PROD-002 - Mouse (stock: 100, price: 29.99)
+2026-04-08 19:42:03.622 [main] INFO  c.t.o.service.InventoryService - Stock updated for PROD-001: +5 → new stock: 15
+2026-04-08 19:42:03.739 [main] INFO  c.t.o.service.OrderService - Added 3x Laptop to order ORD-001
+2026-04-08 19:42:03.740 [main] DEBUG c.t.o.service.OrderService - Remaining stock for PROD-001: 7
+2026-04-08 19:42:03.770 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 19:42:03.793 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 19:42:03.818 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 19:42:03.855 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product PROD-001: 999.99
+2026-04-08 19:42:03.856 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order ORD-001: 999.99
+2026-04-08 19:42:03.857 [main] INFO  c.t.o.service.OrderService - Order ORD-001 confirmed with 1 items, total: 999.99
+2026-04-08 19:42:03.898 [main] INFO  c.t.o.service.OrderService - Order created: ORD-001 for customer: CUST-001
+2026-04-08 19:42:03.931 [main] DEBUG c.t.o.service.OrderService - Retrieved order: ORD-001
+2026-04-08 19:42:03.942 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-3: 100.0
+2026-04-08 19:42:03.943 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-4: 90.0
+2026-04-08 19:42:03.943 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order O-1: 190.0
+2026-04-08 19:42:03.958 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-1: 300.0
+2026-04-08 19:46:48.034 [main] DEBUG c.t.o.service.InventoryService - Stock check for PROD-001: 10
+2026-04-08 19:46:48.109 [main] INFO  c.t.o.service.InventoryService - Product registered: PROD-002 - Mouse (stock: 100, price: 29.99)
+2026-04-08 19:46:48.152 [main] INFO  c.t.o.service.InventoryService - Stock updated for PROD-001: +5 → new stock: 15
+2026-04-08 19:46:48.223 [main] INFO  c.t.o.service.OrderService - Added 3x Laptop to order ORD-001
+2026-04-08 19:46:48.224 [main] DEBUG c.t.o.service.OrderService - Remaining stock for PROD-001: 7
+2026-04-08 19:46:48.239 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 19:46:48.252 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 19:46:48.265 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 19:46:48.291 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product PROD-001: 999.99
+2026-04-08 19:46:48.292 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order ORD-001: 999.99
+2026-04-08 19:46:48.292 [main] INFO  c.t.o.service.OrderService - Order ORD-001 confirmed with 1 items, total: 999.99
+2026-04-08 19:46:48.319 [main] INFO  c.t.o.service.OrderService - Order created: ORD-001 for customer: CUST-001
+2026-04-08 19:46:48.342 [main] DEBUG c.t.o.service.OrderService - Retrieved order: ORD-001
+2026-04-08 19:46:48.349 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-3: 100.0
+2026-04-08 19:46:48.349 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-4: 90.0
+2026-04-08 19:46:48.349 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order O-1: 190.0
+2026-04-08 19:46:48.358 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-1: 300.0
+2026-04-08 20:12:35.398 [main] DEBUG c.t.o.service.InventoryService - Stock check for PROD-001: 10
+2026-04-08 20:12:35.506 [main] INFO  c.t.o.service.InventoryService - Product registered: PROD-002 - Mouse (stock: 100, price: 29.99)
+2026-04-08 20:12:35.574 [main] INFO  c.t.o.service.InventoryService - Stock updated for PROD-001: +5 → new stock: 15
+2026-04-08 20:12:35.637 [main] INFO  c.t.o.service.OrderService - Added 3x Laptop to order ORD-001
+2026-04-08 20:12:35.637 [main] DEBUG c.t.o.service.OrderService - Remaining stock for PROD-001: 7
+2026-04-08 20:12:35.676 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 20:12:35.695 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 20:12:35.743 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product PROD-001: 999.99
+2026-04-08 20:12:35.745 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order ORD-001: 999.99
+2026-04-08 20:12:35.745 [main] INFO  c.t.o.service.OrderService - Order ORD-001 confirmed with 1 items, total: 999.99
+2026-04-08 20:12:35.782 [main] INFO  c.t.o.service.OrderService - Order created: ORD-001 for customer: CUST-001
+2026-04-08 20:12:35.814 [main] DEBUG c.t.o.service.OrderService - Retrieved order: ORD-001
+2026-04-08 20:12:35.824 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-3: 100.0
+2026-04-08 20:12:35.824 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-4: 90.0
+2026-04-08 20:12:35.824 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order O-1: 190.0
+2026-04-08 20:12:35.837 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-1: 300.0
+2026-04-08 20:13:54.707 [main] DEBUG c.t.o.service.InventoryService - Stock check for PROD-001: 10
+2026-04-08 20:13:54.774 [main] INFO  c.t.o.service.InventoryService - Product registered: PROD-002 - Mouse (stock: 100, price: 29.99)
+2026-04-08 20:13:54.811 [main] INFO  c.t.o.service.InventoryService - Stock updated for PROD-001: +5 → new stock: 15
+2026-04-08 20:13:54.852 [main] INFO  c.t.o.service.OrderService - Added 3x Laptop to order ORD-001
+2026-04-08 20:13:54.853 [main] DEBUG c.t.o.service.OrderService - Remaining stock for PROD-001: 7
+2026-04-08 20:13:54.878 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 20:13:54.886 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 20:13:54.910 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product PROD-001: 999.99
+2026-04-08 20:13:54.911 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order ORD-001: 999.99
+2026-04-08 20:13:54.911 [main] INFO  c.t.o.service.OrderService - Order ORD-001 confirmed with 1 items, total: 999.99
+2026-04-08 20:13:54.935 [main] INFO  c.t.o.service.OrderService - Order created: ORD-001 for customer: CUST-001
+2026-04-08 20:13:54.956 [main] DEBUG c.t.o.service.OrderService - Retrieved order: ORD-001
+2026-04-08 20:13:54.963 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-3: 100.0
+2026-04-08 20:13:54.963 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-4: 90.0
+2026-04-08 20:13:54.964 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order O-1: 190.0
+2026-04-08 20:13:54.971 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-1: 300.0
+2026-04-08 21:25:56.197 [main] DEBUG c.t.o.service.InventoryService - Stock check for PROD-001: 10
+2026-04-08 21:25:56.304 [main] INFO  c.t.o.service.InventoryService - Product registered: PROD-002 - Mouse (stock: 100, price: 29.99)
+2026-04-08 21:25:56.338 [main] INFO  c.t.o.service.InventoryService - Stock updated for PROD-001: +5 → new stock: 15
+2026-04-08 21:25:56.411 [main] INFO  c.t.o.service.OrderService - Added 3x Laptop to order ORD-001
+2026-04-08 21:25:56.411 [main] DEBUG c.t.o.service.OrderService - Remaining stock for PROD-001: 7
+2026-04-08 21:25:56.436 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 21:25:56.445 [main] WARN  c.t.o.service.OrderService - Order ORD-001 has been cancelled
+2026-04-08 21:25:56.483 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product PROD-001: 999.99
+2026-04-08 21:25:56.483 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order ORD-001: 999.99
+2026-04-08 21:25:56.484 [main] INFO  c.t.o.service.OrderService - Order ORD-001 confirmed with 1 items, total: 999.99
+2026-04-08 21:25:56.507 [main] INFO  c.t.o.service.OrderService - Order created: ORD-001 for customer: CUST-001
+2026-04-08 21:25:56.527 [main] DEBUG c.t.o.service.OrderService - Retrieved order: ORD-001
+2026-04-08 21:25:56.533 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-3: 100.0
+2026-04-08 21:25:56.534 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-4: 90.0
+2026-04-08 21:25:56.534 [main] INFO  c.tecmx.ordermanagement.model.Order - Total calculated for order O-1: 190.0
+2026-04-08 21:25:56.544 [main] DEBUG c.t.ordermanagement.model.OrderItem - Subtotal calculated for product P-1: 300.0
